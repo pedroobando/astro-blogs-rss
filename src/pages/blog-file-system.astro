@@ -1,0 +1,26 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import BlogPost from '@/components/BlogPost.astro';
+import { siteInfo } from '@/config/siteInfo';
+
+// const posts = await Astro.glob('../posts/*.{md,mdx}');
+const matches = import.meta.glob('./posts-old/*.{md,mdx}', { eager: true });
+const posts = Object.values(matches) as any[];
+// const post01 = posts[0].frontmatter;
+// console.log(post01);
+// const posts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+---
+
+<MainLayout title="Home">
+  <!-- component -->
+  <section class="bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+      <h1 class="text-3xl font-semibold capitalize text-slate-300 lg:text-4xl">{siteInfo.title}</h1>
+
+      <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
+        {posts.map((post) => <BlogPost {...post} />)}
+        <!-- <BlogPost /> -->
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,24 @@
+---
+import AuthorCard from '@/components/AuthorCard.astro';
+import { siteInfo } from '@/config/siteInfo';
+import MainLayout from '@/layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+const authors = await getCollection('author');
+---
+
+<MainLayout title="Autores">
+  <section class="bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+      <h1 class="text-3xl font-semibold capitalize text-slate-300 lg:text-4xl">{siteInfo.title}</h1>
+      <a href="/" class="hover:underline text-blue-500 hover:text-blue-400 transition-all">Home</a>
+      <!-- <nav class="flex flex-row transition-all">
+        <a class="mr-4 hover:animate-pulse" href="/blog">Blog paginado</a>
+        <a class="hover:animate-pulse" href="/authors">Autores</a>
+      </nav> -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 mt-8 gap-4">
+        {authors.map((author) => <AuthorCard author={author} />)}
+      </div>
+    </div>
+  </section>
+</MainLayout>

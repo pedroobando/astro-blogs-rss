@@ -1,0 +1,32 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import TypeBlogPost from '@/components/TypeBlogPost.astro';
+import { siteInfo } from '@/config/siteInfo';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog', (post) => post.data.isDraft == false);
+// console.log(blogPosts[0].id, blogPosts[0].data, blogPosts[0].filePath, blogPosts[0].collection, blogPosts[0].body);
+---
+
+<MainLayout title="Home">
+  <section class="bg-gray-900">
+    <div class="container px-6 py-10 mx-auto">
+      <h1 class="text-3xl font-semibold capitalize text-slate-300 lg:text-4xl">{siteInfo.title}</h1>
+
+      <nav class="flex flex-row transition-all">
+        <a class="mr-4 hover:animate-pulse" href="/blog">Blog paginado</a>
+        <a class="hover:animate-pulse" href="/authors">Autores</a>
+      </nav>
+      <div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
+        {blogPosts.map((post) => <TypeBlogPost post={post} />)}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  @import 'tailwindcss';
+  a {
+    @apply mt-2 text-blue-500 hover:underline hover:text-blue-400;
+  }
+</style>
